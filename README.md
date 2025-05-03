@@ -71,10 +71,9 @@ The application comes with demo accounts for testing:
 
 ## 📱 Responsive Design
 
-The application is designed to work on various screen sizes:
+The application is designed to work on:
 - Desktop computers
 - Tablets
-- Mobile phones
 
 ## 🔒 Security Features
 
