@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Bank Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Login Section -->
+        <div id="login-section" class="section">
+            <h1>Bank Management System</h1>
+            <div class="role-selection">
+                <h2>Select your role:</h2>
+                <div class="role-buttons">
+                    <button class="role-btn" data-role="admin">Admin</button>
+                    <button class="role-btn" data-role="employee">Employee</button>
+                    <button class="role-btn" data-role="user">User</button>
+                </div>
+            </div>
+            <div class="login-form-container">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" id="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Admin Dashboard Section -->
+        <div id="admin-section" class="section hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Admin Panel</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="bank-details">Bank Details</a></li>
+                        <li><a href="#" class="nav-link" data-section="user-management">User Management</a></li>
+                        <li><a href="#" class="nav-link" data-section="employee-management">Employee Management</a></li>
+                        <li><a href="#" class="nav-link" id="logout-btn">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="main-content">
+                <div id="bank-details-content" class="content-area">
+                    <h2>Bank Details</h2>
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <h3>Total USDT Balance</h3>
+                            <p id="total-usdt">$0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total AFG Balance</h3>
+                            <p id="total-afg">₳0.00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>User Count</h3>
+                            <p id="user-count">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Employee Count</h3>
+                            <p id="employee-count">0</p>
+                        </div>
+                    </div>
+                    <div class="activity-container">
+                        <h3>Recent Activity</h3>
+                        <ul id="activity-list"></ul>
+                    </div>
+                </div>
+                <div id="user-management-content" class="content-area hidden">
+                    <h2>User Management</h2>
+                    <div class="user-list-container">
+                        <table id="user-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Account Number</th>
+                                    <th>Balance</th>
+                                    <th>Account Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="employee-management-content" class="content-area hidden">
+                    <h2>Employee Management</h2>
+                    <div class="employee-list-container">
+                        <table id="employee-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Employee ID</th>
+                                    <th>Branch</th>
+                                    <th>Access Level</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Employee Dashboard Section -->
+        <div id="employee-section" class="section hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Employee Panel</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="create-account">Create Account</a></li>
+                        <li><a href="#" class="nav-link" data-section="user-lookup">User Lookup</a></li>
+                        <li><a href="#" class="nav-link" id="emp-logout-btn">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="main-content">
+                <div id="create-account-content" class="content-area">
+                    <h2>Create New Account</h2>
+                    <div class="card">
+                        <form id="create-account-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="user-name">Full Name <span class="required">*</span></label>
+                                    <input type="text" id="user-name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-phone">Phone <span class="required">*</span></label>
+                                    <input type="text" id="user-phone" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-address">Address</label>
+                                <input type="text" id="user-address" name="address">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-job">Job Details</label>
+                                <textarea id="user-job" name="jobDetails"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="account-type">Account Type <span class="required">*</span></label>
+                                    <select id="account-type" name="accountType" required>
+                                        <option value="USDT">USDT</option>
+                                        <option value="AFG">AFG</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="initial-deposit">Initial Deposit <span class="required">*</span></label>
+                                    <input type="number" id="initial-deposit" name="balance" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="user-password">Password <span class="required">*</span></label>
+                                    <input type="password" id="user-password" name="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm Password <span class="required">*</span></label>
+                                    <input type="password" id="confirm-password" name="confirmPassword" required>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="reset" class="secondary-btn">Clear Form</button>
+                                <button type="submit">Create Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="user-lookup-content" class="content-area hidden">
+                    <h2>User Lookup</h2>
+                    <div class="search-container">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="user-search" placeholder="Search by name, account number or phone">
+                            <button id="search-btn">Search</button>
+                        </div>
+                    </div>
+                    <div class="search-results">
+                        <table id="search-results-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Account Number</th>
+                                    <th>Balance</th>
+                                    <th>Account Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="search-results-list"></tbody>
+                        </table>
+                        <div id="no-results" class="no-results hidden">
+                            <i class="fas fa-search"></i>
+                            <h3>No results found</h3>
+                            <p>Try searching with a different term</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- User Dashboard Section -->
+        <div id="user-section" class="section hidden">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>User Dashboard</h2>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="dashboard">Dashboard</a></li>
+                        <li><a href="#" class="nav-link" data-section="transactions">Transactions</a></li>
+                        <li><a href="#" class="nav-link" data-section="account-settings">Account Settings</a></li>
+                        <li><a href="#" class="nav-link" id="user-logout-btn">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="main-content">
+                <div id="dashboard-content" class="content-area">
+                    <h2>Dashboard</h2>
+                    <div class="user-info-card">
+                        <div class="balance-info">
+                            <h3>Current Balance</h3>
+                            <p id="user-balance">$0.00</p>
+                        </div>
+                        <div class="account-info">
+                            <p><strong>Account Number:</strong> <span id="user-account-number"></span></p>
+                            <p><strong>Account Type:</strong> <span id="user-account-type"></span></p>
+                        </div>
+                    </div>
+                    <div class="transaction-actions">
+                        <button id="deposit-btn" class="action-btn">
+                            <i class="fas fa-arrow-down"></i> Deposit
+                        </button>
+                        <button id="withdraw-btn" class="action-btn">
+                            <i class="fas fa-arrow-up"></i> Withdraw
+                        </button>
+                        <button id="transfer-btn" class="action-btn">
+                            <i class="fas fa-exchange-alt"></i> Transfer
+                        </button>
+                    </div>
+                    <div class="recent-transactions card">
+                        <h3>Recent Transactions</h3>
+                        <table id="recent-transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-transactions-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="transactions-content" class="content-area hidden">
+                    <h2>Transaction History</h2>
+                    <div class="transaction-filters">
+                        <div class="filter-group">
+                            <label for="transaction-type">Filter by Type:</label>
+                            <select id="transaction-type">
+                                <option value="all">All Transactions</option>
+                                <option value="deposit">Deposits</option>
+                                <option value="withdrawal">Withdrawals</option>
+                                <option value="transfer">Transfers</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="date-range">Date Range:</label>
+                            <input type="date" id="date-from" name="dateFrom">
+                            <span>to</span>
+                            <input type="date" id="date-to" name="dateTo">
+                            <button id="apply-filters">Apply Filters</button>
+                        </div>
+                    </div>
+                    <table id="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Receiver</th>
+                                <th>Balance After</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-list"></tbody>
+                    </table>
+                </div>
+                <div id="account-settings-content" class="content-area hidden">
+                    <h2>Account Settings</h2>
+                    <div class="card">
+                        <form id="account-settings-form">
+                            <div class="form-group">
+                                <label for="settings-name">Full Name</label>
+                                <input type="text" id="settings-name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-address">Address</label>
+                                <input type="text" id="settings-address" name="address">
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-phone">Phone</label>
+                                <input type="text" id="settings-phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-password">New Password</label>
+                                <input type="password" id="settings-password" name="password">
+                            </div>
+                            <button type="submit">Update Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modals -->
+        <div id="transaction-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Transaction</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="transaction-amount">Amount</label>
+                        <div class="input-with-icon">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="transaction-amount" name="amount" min="0.01" step="0.01" required>
+                        </div>
+                    </div>
+                    <div id="receiver-group" class="form-group hidden">
+                        <label for="receiver-account">Receiver Account Number</label>
+                        <input type="text" id="receiver-account" name="receiver">
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-details">Details</label>
+                        <textarea id="transaction-details" name="details"></textarea>
+                    </div>
+                    <button type="submit" id="submit-transaction">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- User details modal -->
+        <div id="user-details-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-user-modal">&times;</span>
+                <h2>User Details</h2>
+                <div class="user-details-container">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h3 id="detail-user-name"></h3>
+                        <p id="detail-account-number"></p>
+                        
+                        <div class="profile-details">
+                            <div class="detail-row">
+                                <span class="label">Account Type</span>
+                                <span class="value" id="detail-account-type"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Balance</span>
+                                <span class="value" id="detail-balance"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Phone</span>
+                                <span class="value" id="detail-phone"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Address</span>
+                                <span class="value" id="detail-address"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button id="detail-deposit-btn" class="action-btn">
+                                <i class="fas fa-arrow-down"></i> Deposit
+                            </button>
+                            <button id="detail-withdraw-btn" class="action-btn">
+                                <i class="fas fa-arrow-up"></i> Withdraw
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="user-transactions">
+                        <h3>Transaction History</h3>
+                        <table id="detail-transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-transactions-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Employee transaction modal -->
+        <div id="employee-transaction-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-emp-transaction-modal">&times;</span>
+                <h2 id="emp-transaction-title">Process Transaction</h2>
+                <div class="user-info">
+                    <div class="user-avatar-small">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h3 id="emp-user-name"></h3>
+                        <p id="emp-account-details"></p>
+                    </div>
+                </div>
+                <form id="employee-transaction-form">
+                    <div class="form-group">
+                        <label for="emp-transaction-amount">Amount</label>
+                        <div class="input-with-icon">
+                            <span class="currency-symbol" id="emp-currency-symbol">$</span>
+                            <input type="number" id="emp-transaction-amount" name="amount" min="0.01" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emp-transaction-details">Details</label>
+                        <textarea id="emp-transaction-details" name="details"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn close-modal-btn">Cancel</button>
+                        <button type="submit" id="emp-submit-transaction">Process Transaction</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="toast-container" class="toast-container"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
