@@ -71,8 +71,8 @@ body {
 
 .role-btn {
     padding: 15px 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #4299e1;
+    border: 1px solid #ffffff;
     border-radius: 8px;
     cursor: pointer;
     flex: 1;
@@ -675,4 +675,54 @@ tr:hover {
         gap: 15px;
         align-items: stretch;
     }
+}
+
+
+
+/* Enable vertical & horizontal scrolling for user list */
+.user-list-container {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Enable scroll for employee list */
+.employee-list-container {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Scroll for search results */
+.search-results {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Scroll for recent transactions */
+.recent-transactions {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Scroll for user transaction history */
+.user-transactions {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Optional: make table headers sticky */
+table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 1;
 }
